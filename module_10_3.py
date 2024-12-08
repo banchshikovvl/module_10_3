@@ -17,23 +17,20 @@ class Bank:
             rand = randint(0, 500)
             self.balance += rand
             print(f'Пополнение:\t{rand}$, \tтекущий баланс: {self.balance}$ ')
-            # print(f'Блок пополнения: {self.lock.locked()} ')
-            sleep(0.001)
+            sleep(0.01)
 
     def take(self):
-        self.lock.release()
         for transaction in range(100):
             rand = randint(0, 500)
-            print(f'Запрос на: \t{rand}$ \n')
+            print(f'Запрос на: \t{rand}$ ')
             if self.balance >= rand:
                 self.balance -= rand
                 print(f'Снятие: \t{rand}$, \tтекущий баланс: {self.balance}$ ')
-                # print(f'Блок снятия: {self.lock.locked()} ')
-                sleep(0.001)
+                sleep(0.01)
             else:
                 print('Запрос отклонён, недостаточно средств')
-                # self.lock.acquire()
-                sleep(0.001)
+                self.lock.acquire()
+                sleep(0.01)
 
 
 bk = Bank()
